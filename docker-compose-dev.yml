@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    restart: always
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=workerDB
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - ./mysql_db:/var/lib/mysql
+    restart: always
+
+  mongodb:
+    image: mongo:4.2.12-bionic
+    ports: 
+      - 27017:27017
+      - 27019:27019
+    environment:
+      - MONGO_INITDB_DATABASE=serverDB
+    volumes:
+      - ./mongo_db:/data/db
+    restart: always

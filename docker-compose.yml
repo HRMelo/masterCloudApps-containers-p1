@@ -1,0 +1,78 @@
+version: "3.9"
+services:
+  server:
+    image: hrmmelo/server
+    ports:
+    - 3000:3000
+    environment:
+      - RABBITMQ_URL=amqp://root:password@rabbitmq
+      - MONGODB_URL=mongodb://mongodb:27017/serverDB
+    depends_on:
+      - rabbitmq
+      - mongodb
+    command: bash -c "
+      ./wait-for-it.sh rabbitmq:5672 -t 0 --
+      ./wait-for-it.sh mongodb:27017 -t 0 --
+      node src/server.js"
+    restart: on-failure
+
+  worker:
+    image: hrmmelo/workerms
+    #image: hrmmelo/workerjib
+    ports:
+    - 8000:8000
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=root
+      - SPRING_RABBITMQ_PASSWORD=password
+      - GRPC.CLIENT.UPPERCASESERVER.ADDRESS=static://externalservice:9090
+      - SPRING.DATASOURCE.URL=jdbc:mysql://mysql:3306/workerDB
+    depends_on:
+      - rabbitmq
+      - mysql
+      - externalservice
+    restart: on-failure
+
+  externalservice:
+    image: hrmmelo/externalservice
+    ports:
+    - 9090:9090
+    environment:
+      - GRPC_HOST=externalservice
+      - GRPC_PORT=9090
+    restart: on-failure
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    restart: always
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=workerDB
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - ./mysql_db:/var/lib/mysql
+    restart: always
+
+  mongodb:
+    image: mongo:4.2.12-bionic
+    ports: 
+      - 27017:27017
+      - 27019:27019
+    environment:
+      - MONGO_INITDB_DATABASE=serverDB
+    volumes:
+      - ./mongo_db:/data/db
+    restart: always
