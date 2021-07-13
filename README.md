@@ -3,6 +3,7 @@ Project used as a practice to create a small distributed application which is us
 API REST, gRPC and RabbitMQ.
 
 ##DEPLOYMENT
+
 The different services are using docker for creating their respective docker images. Different strategies were used to
 create the images.
 
