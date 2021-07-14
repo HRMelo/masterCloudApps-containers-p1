@@ -6,7 +6,7 @@ services:
       - 5672:5672
       - 15672:15672
     volumes:
-      - ./rabbitmq:/var/lib/rabbitmq
+      - ./rabbitmq_dev:/var/lib/rabbitmq
     restart: always
 
   mysql:
@@ -17,7 +17,7 @@ services:
       - MYSQL_DATABASE=workerDB
       - MYSQL_ROOT_PASSWORD=password
     volumes:
-      - ./mysql_db:/var/lib/mysql
+      - ./mysql_db_dev:/var/lib/mysql
     restart: always
 
   mongodb:
@@ -28,5 +28,5 @@ services:
     environment:
       - MONGO_INITDB_DATABASE=serverDB
     volumes:
-      - ./mongo_db:/data/db
+      - ./mongo_db_dev:/data/db
     restart: always
