@@ -2,7 +2,7 @@ const { spawn } = require('child_process');
 
 function exec(serviceName, command, cwd){
     
-    console.log(`Stated service [${serviceName}]`);
+    console.log(`Started service [${serviceName}]`);
     
     let cmd = spawn(command, [], { cwd, shell: true });
 
