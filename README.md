@@ -28,12 +28,12 @@ Run the following command to deploy the application locally using docker.
 ```bash
 docker compose up
 ```
-_Before using docker you must have installed docker_
+_You have to install docker before using it._
 
-### DEPLOYMENT WITH VS CODE (REMOTE CONTAINERS)
+### DEPLOYMENT WITH [VSCODE (REMOTE CONTAINERS)](https://code.visualstudio.com/docs/remote/containers)
 
 Before running the services with remote container technology, you are required to install remote container plugin from 
-your vs code editor.
+your VSCode editor.
 
 Once the plugin is installed, run the following command using docker.
 
@@ -41,19 +41,16 @@ Once the plugin is installed, run the following command using docker.
 docker compose -f docker-compose-dev.yml
 ```
 
-This yml file is used to run auxiliary services as MongoDB, MySQL and RabbitMQ. These technologies are necessary for the
-deployment of the different services as they are using them.
+This yml file is used to run auxiliary services like MongoDB, MySQL and RabbitMQ. These technologies are necessary for the
+deployment of the different services due to they are using them.
 
-Once the services are up, you are able to run the different services with VS Code, supported by remote container
+Once the services are up, you are able to run the different services with VSCode, supported by remote container
 technology, as it was mentioned above.
-
-docker-compose.yml
-File used to deploy both the different services and the auxiliary services (MySQL, MongoDB and RabbitMQ).
 
 ##### **VOLUMES**
 
-Auxiliary services are using persistence folder to save data. In this way, every time an auxiliary services is re-run, 
-the data will be available as there was before the container was deleted.
+Auxiliary services are using the persistence folder to save data. In this way, every time an auxiliary service is 
+re-run, the data will be available as there were before the container was deleted.
 
 There are 3 folders for the different services.
 
@@ -63,6 +60,6 @@ There are 3 folders for the different services.
 - rabbitmq
 
 ###### DOCKER-COMPOSE-DEV
-- mongo_db
-- mysql_db
-- rabbitmq
+- mongo_db_dev
+- mysql_db_dev
+- rabbitmq_dev
