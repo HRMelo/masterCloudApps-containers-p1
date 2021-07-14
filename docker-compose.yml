@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   server:
-    image: hrmmelo/server
+    image: hrmmelo/server-service:v1
     ports:
     - 3000:3000
     environment:
@@ -17,8 +17,10 @@ services:
     restart: on-failure
 
   worker:
-    image: hrmmelo/workerms
-    #image: hrmmelo/workerjib
+    #MULTISTAGE
+    image: hrmmelo/worker-service:v1
+    #JIB
+    #image: hrmmelo/worker-service:v2
     ports:
     - 8000:8000
     environment:
@@ -35,7 +37,7 @@ services:
     restart: on-failure
 
   externalservice:
-    image: hrmmelo/externalservice
+    image: hrmmelo/external-service:v1
     ports:
     - 9090:9090
     environment:
